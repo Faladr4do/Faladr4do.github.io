@@ -1,0 +1,126 @@
+---
+title: "Finite State Machines"
+author: "João Ribeiro 2024111066, Ricardo Lila 2241010"
+format:
+    revealjs: 
+        theme: dark
+        scrollable: true
+---
+
+# What are Finite State Machines?
+
+## What are Finite State Machines?
+
+- Mathematical models used to represent and control the behavior of systems that can exist in a finite number of states at any given time.
+- It is a concept widely used in computer science, engineering, and other fields to design, analyze, and implement systems with discrete and sequential behavior.[1,3] 
+
+## What are Finite State Machines?
+
+- An FSM consists of
+    - A set of states;
+    - A set of input events or stimuli;
+    - A set of output actions or responses;
+    - A set of transitions between states based on input events.
+- They can be visualized as a directed graph where nodes represent the states and the edges connecting the nodes represent transitions. [5]
+
+## What does this mean?
+
+- A state is a mode or behavior that the machine can adopt at any given moment.
+- A transition is a change from one state to another in response to an input, event or condition.
+- An input is a signal that the machine receives and causes it to transition to another state.
+- An output is a signal, action or result produced by the machine in its state. [5]
+
+## Uses
+
+- FSM are widely used to model and control systems with discrete and sequential behavior, such as software protocols, digital circuits, robotic systems, and user interfaces, among others.
+- They provide a structured and systematic approach to designing and analyzing complex systems, making them easier to understand, implement, and maintain. [3]	
+
+## Concrete Examples
+
+- Vending Machines:
+    - States: Awaiting selection, awaiting payment, delivering product;
+    - Inputs: Selecting product, inserting credit.
+- Cleaning Robot:
+    - States: Idle, cleaning, avoiding obstacles;
+    - Inputs: Start/stop command, obstacle detection, active time.
+- Traffic Lights:
+    - States: Red, Yellow, Green;
+    - Inputs: Elapsed time. [3]
+
+# Types of Finite State Machines
+
+## Types of Finite State Machines
+
+- When it comes to states and transitions, there are two major types of finite state machines (FSM): [1,3]
+    - Deterministic finite state machines, often called deterministic finite automata (DFA);
+    - Non-deterministic finite state machines, often called non-deterministic finite automata (NFA). 
+- Additionally, FSM can also be considered Mealy or Moore machines, depending on how they select their outputs.[3-5]
+
+## Deterministic State Machines
+
+- Each state transition is uniquely determined by the current state and input. 
+- This means that given a specific input and current state, only one possible transition to the next state exists. [1,5,4]
+- Consider a basic enemy AI with three states: Idle, Attack, and Dodge. 
+    - If the current state is Idle and the player attacks, the enemy transitions to the Dodge state. 
+    - If the player is in range and not attacking, the enemy will transition to the Attack state.
+    - If the player moves out of range, the enemy will transition to the Idle state.
+    - This example showcases a deterministic FSM because, for each input and state, there is a unique next state.
+
+## Non-deterministic State Machines
+
+- In a non-deterministic FSM, an input can lead to one, more than one, or no transition for a given state.
+- This means that the next state is not uniquely determined and the machine can be in multiple states simultaneously. [3]
+- Non-deterministic FSM can always be translated into equivalent deterministic FSM. [1,4]
+- Consider a fighting game detecting whether the player is performing a combo. The input sequence is a series of buttons: down, forward, punch.
+    - The recognizer can have multiple possible paths because the same input may match multiple patterns simultaneously.
+    - For example, after pressing down, the player could move towards the “fireball” state by pressing forward, or towards the “low punch” by pressing punch.
+    - The state machine moves towards both states simultaneously, before collapsing one of them once the player inputs the next button, making it a non-deterministic FSM.
+- In game development, NFAs are more useful for recognizing overlapping input sequences, event patterns, and quest conditions.
+- For character AI, something like a behavior tree, utility AI, or probabilistic FSM is generally a better fit due to predictability, performance and simplicity of implementation. [5]
+
+## Mealy and Moore Machines
+
+- Mealy and Moore Machines are types of FSM (usually deterministic) defined by how their outputs are determined. [3,4,5]
+- Mealy machines select their output depending on both their current state and their input
+- Consider an NPC that the player can talk to
+    - If the player interacts with them while they’re idle, they start their dialogue.
+    - If the player interacts with them while they’re talking, they advance to the next line.
+    - If the player leaves while they’re talking, they close the dialogue.
+    - Each combination of state and input select a different output, making this a mealy machine.
+- Moore machines always select a certain output depending on their state, regardless of input.
+    - Consider a character with three states, each with their own animation: Healthy, Damaged, Critical
+    - At certain HP levels, the character will transition to one of the three states.
+    - Regardless of the transition inputs or, in other words, regardless of how the character reaches those states (eg. the reason for the hp change or the specific hp value), each state will always output the same animation, making it a moore machine.
+
+# FSM In Game AI
+
+## FSM In Game AI
+
+Finite State Machines remain the most common decision-making algorithms in game development because of their simplicity and efficacy. [2,6]
+
+In Unreal Engine, they can be seen more purely in Animation Blueprints, but they're also used in AI in the form of State Trees, a hierarchical variation of Finite State Machines borrowing the selectors from Behavior Trees.
+
+Like in Behavior trees, the states are arranged in a tree-like structure, but they follow FSM rules regarding state transitioning. [2,8]
+
+## Tradeoffs and Alternatives
+
+FSM are intuitive, but not without tradeoffs. The main downside is complexity: the number of transitions grows dramatically with the number of states (O(N²)), which can become overwhelming.
+
+Common alternatives to FSM in videogame AI include Utility AI, Behavior Trees and Goal-Oriented Action Planning, although some of these also have some drawbacks, including performance, planning, debugging and implementation complexity. [2,5-7]
+
+# References
+
+## References
+
+[1]K. Moore and D. Gupta, “Finite State Machines | Brilliant Math & Science Wiki,” Brilliant.org, 2011. https://brilliant.org/wiki/finite-state-machines/ (accessed Nov. 10, 2026).
+[2]“⚙️ Tech Breakdown: AI With Finite State Machines,” Littlepolygon.com, Nov. 18, 2024. https://blog.littlepolygon.com/posts/fsm/ (accessed Nov. 10, 2026).
+[3]“Finite State Machine Meaning, Working, and Examples | Spiceworks,” Spiceworks Inc, Sept. 12, 2023. https://www.spiceworks.com/soft-tech/what-is-fsm/ (accessed Nov. 10, 2026).
+[4]Wikipedia Contributors, “Finite-State Machine,” Wikipedia, Apr. 25, 2019. https://en.wikipedia.org/wiki/Finite-state_machine (accessed Nov. 10, 2026).
+[5]Mehmet Tosun, “A Comprehensive Guide to Finite State Machines in Computer Science,” Medium, Feb. 29, 2024. https://mehmet-tosun.medium.com/a-comprehensive-guide-to-finite-state-machines-in-computer-science-9fc74f96e1f4 (accessed Nov. 10, 2026).
+[6]D. Jagdale, “Finite State Machine in Game Development,” International Journal of Advanced Research in Science, Communication and Technology, vol. 10, no. 1, pp. 384–390, Oct. 2021, doi: 10.48175/ijarsct-2062.
+[7]J. Svensson, “Hierarchical Finite State Machine,” dotcrossdot, Feb. 22, 2021. https://medium.com/dotcrossdot/hierarchical-finite-state-machine-c9e3f4ce0d9e (accessed Nov. 10, 2026).
+[8]Epic Games, “Overview of StateTree in Unreal Engine,” Unreal Engine 5.9 Documentation | Epic Developer Community. https://dev.epicgames.com/documentation/unreal-engine/overview-of-state-tree-in-unreal-engine?lang=en-US (accessed Nov. 10, 2026).
+
+## Use of Generative AI
+
+AI was used during the research process to organize ideas and gather examples, which were then verified by comparing their descriptions with the definitions and examples presented by the other consulted references.
